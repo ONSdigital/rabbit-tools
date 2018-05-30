@@ -54,7 +54,7 @@ public class SomeClass {
 ```java
 Rabbitmq config = this.appConfig.getRabbitmq();
 
-SimpleMessageSender sender = new SimpleMessageSender(config.getHost(), config.getPort(), config.getUsername(), config.getPassword());
+SimpleMessageSender sender = new SimpleMessageSender(config);
 
 sender.sendMessage("sample-outbound-exchange", "Sample.Message.binding", "message content (json etc)");
 ```
@@ -63,7 +63,7 @@ sender.sendMessage("sample-outbound-exchange", "Sample.Message.binding", "messag
 
 ```java
 Rabbitmq config = this.appConfig.getRabbitmq();
-SimpleMessageListener sml = new SimpleMessageListener(config.getHost(), config.getPort(), config.getUsername(), config.getPassword());
+SimpleMessageListener sml = new SimpleMessageListener(config);
 
 BlockingQueue<String> msgQueue = sml.listen(SimpleMessageListener.ExchangeType.Direct,
                 "sample-outbound-exchange", "Sample.SampleMessage.binding");

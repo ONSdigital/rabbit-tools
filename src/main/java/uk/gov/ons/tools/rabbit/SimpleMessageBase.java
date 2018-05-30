@@ -23,6 +23,10 @@ public class SimpleMessageBase {
         rabbitAdmin = new RabbitAdmin(connectionFactory);
     }
 
+    public SimpleMessageBase(Rabbitmq rabbitmq){
+        this(rabbitmq.getHost(), rabbitmq.getPort(), rabbitmq.getUsername(), rabbitmq.getPassword());
+    }
+
     protected RabbitAdmin getRabbitAdmin(){
         return this.rabbitAdmin;
     }

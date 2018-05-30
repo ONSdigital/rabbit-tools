@@ -37,6 +37,14 @@ public class SimpleMessageListener extends SimpleMessageBase {
     }
 
     /**
+     * Constructor that accepts a Rabbitmq configuration object
+     * @param rabbitmq a Rabbitmq configuration object populated by Spring or other means
+     */
+    public SimpleMessageListener(Rabbitmq rabbitmq) {
+        super(rabbitmq);
+    }
+
+    /**
      * Listen to all messages on an exchange
      * @param type the type of the exchange
      * @param exchangeName the name of the exchange
