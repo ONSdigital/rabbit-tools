@@ -37,7 +37,7 @@ public class AppConfig {
 ```
 
 ```java
-public class SomeClass
+public class SomeClass {
     
     @Autowired
     private AppConfig appConfig;
@@ -46,6 +46,7 @@ public class SomeClass
         Rabbitmq rabbitmq = this.appConfig.getRabbitmq();
         String rabbitHost = rabbitmq.getHost();
     }
+}
 ```
 
 # Sending messages
@@ -53,7 +54,7 @@ public class SomeClass
 ```java
 Rabbitmq config = this.appConfig.getRabbitmq();
 
-SimpleMessageSender sender = SimpleMessageSender(config.getHost(), config.getPort(), config.getUsername(), config.getPassword());
+SimpleMessageSender sender = new SimpleMessageSender(config.getHost(), config.getPort(), config.getUsername(), config.getPassword());
 
 sender.sendMessage("sample-outbound-exchange", "Sample.Message.binding", "message content (json etc)");
 ```
