@@ -1,0 +1,37 @@
+language: java
+jdk: openjdk8
+
+before_install:
+  # Checkout master branch not commit on master builds
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    git checkout $TRAVIS_BRANCH;
+    fi
+
+script:
+  - "mvn cobertura:cobertura"
+  - mvn test -B
+  # Only release on master builds
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    git config --global user.email "travis@travis-ci.org";
+    git config --global user.name "Travis CI";
+    mvn -s .maven.settings.xml -B -Dusername=$GITHUB_API_KEY release:prepare;
+    mvn -s .maven.settings.xml -B release:perform;
+    fi
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+notifications:
+  slack:
+    rooms:
+      secure: rt2ut/ACihO/TIxlOawQ8//ZBzEaW7ADRQ5KEFuBQAwhZSAi+QnauH52Cb7K5AxjmTsYN9r6yyu7sW82HBrRss5qRxCJW76i/KclILvtaHmfy1YfrPLhiJUQFLLQh0INqhJPi8uEfbxBrWxqf+7tEkhMU9/Sj9z2OTNRWEk7jL6ulbIzKL5SCxf7leNVjVG8a3JX0WO70R2XU/5oMFOjRWGzgSpz9BcN40jzCDsXwM2l1gPrwPcCpxF8gjA0ZgyS/5jJd0gVHX6Gj4dzkusiPyP1VVTk8IHop1aMMR3iqpqmr0qp8UB7jrDLe8t/Y2NA/0g2o59K64OBeaJP/gP7VH/u1lWburCKJ/rBEuPfLpvYZfjtPCfKx2NUBJaGCAriuPVpKr4EtXlXtlGu2/5v4knDFdhj3EkfLyaqXR87dEtlh++mYEekS2QnZXWXouvTPMud67+l8vtk132yztF7BtCt2Wlma2bDUbxnTdz6kkA6zRAux4wFyUCL1HehvEHP8SSyVthnCLVM0aLA0+YuiDABPseOkDC8EVgRyKUbWT8Wre3h9htLgoA2E3weXAQsD/a3OX8ehZEgyv3klZyKwrH6q2toACVt5Jpz8CbxiDYew9AFbYVzSYo1ShqKDROPdYisE/hPqbzFR/2nZbYbTDGDU376mpRizrQLdhMHkMY=
+    on_failure: always
+    on_success: never
+
+cache:
+  directories:
+  - $HOME/.m2
+
+branches:
+    only:
+        - master
