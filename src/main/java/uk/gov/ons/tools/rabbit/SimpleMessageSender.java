@@ -27,4 +27,23 @@ public class SimpleMessageSender extends SimpleMessageBase {
 
         rabbitTemplate.convertAndSend(exchange, message);
     }
+
+    /**
+     * This method sends a message direct to a Rabbit queue.  It's use is really not recommended
+     * as all messages should go through an exchange.  However some of the RM services
+     * are accdientally posting direct to queues so this method is here to allow integration tests
+     * to mimic this behaviour.
+     *
+     * This works because, by default, queues are bound to the default exchange with the name of the
+     * queue as the routing key.
+     * Reference: https://goo.gl/mBqv13
+     *
+     * @param queueName the name of the queue to send the message to
+     * @param message the message to send
+     */
+    public void sendMessageToQueue(String queueName, String message){
+        RabbitTemplate rabbitTemplate = getRabbitTemplate();
+
+        rabbitTemplate.convertAndSend(queueName, message);
+    }
 }
