@@ -27,15 +27,28 @@ public class SimpleMessageBase {
         this(rabbitmq.getHost(), rabbitmq.getPort(), rabbitmq.getUsername(), rabbitmq.getPassword());
     }
 
+    /**
+     * Constructor for use by unit tests
+     */
+    SimpleMessageBase(){}
+
     protected RabbitAdmin getRabbitAdmin(){
         return this.rabbitAdmin;
     }
 
-    protected ConnectionFactory getConnectionFactory(){
-        return this.connectionFactory;
-    }
-
     protected RabbitTemplate getRabbitTemplate(){
         return this.rabbitAdmin.getRabbitTemplate();
+    }
+
+    ConnectionFactory getConnectionFactory(){
+        return connectionFactory;
+    }
+
+    /**
+     * This setter is solely for use by unit tests
+     * @param rabbitAdmin a RabbitAdmin
+     */
+    void setRabbitAdmin(RabbitAdmin rabbitAdmin){
+        this.rabbitAdmin = rabbitAdmin;
     }
 }

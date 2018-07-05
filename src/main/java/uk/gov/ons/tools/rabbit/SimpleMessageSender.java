@@ -9,6 +9,13 @@ public class SimpleMessageSender extends SimpleMessageBase {
     }
 
     /**
+     * Constructor for use by unit tests
+     */
+    SimpleMessageSender(){
+        super();
+    }
+
+    /**
      * Constructor that accepts a Rabbitmq configuration object
      * @param rabbitmq a Rabbitmq configuration object populated by Spring or other means
      */
