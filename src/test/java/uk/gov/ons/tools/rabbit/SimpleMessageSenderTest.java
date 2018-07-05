@@ -35,8 +35,6 @@ public class SimpleMessageSenderTest {
   public void testSendMessageToQueue(){
     String queueName  = "Queue.Name";
     String message = "\n"
-        + "Tags: generator, random, csv, csv generator\n"
-        + "Back JSON SQL HTML XML CSVCopy\n"
         + "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
         + "<dataset>\n"
         + "\t<register>\n"
@@ -48,7 +46,7 @@ public class SimpleMessageSenderTest {
         + "\t\t<password>K,y899gY&+gV7Mp</password>\n"
         + "\t\t<cc>38732647699838</cc>\n"
         + "\t\t<lorem>In fermentum et sollicitudin ac orci phasellus egestas tellus rutrum. Et sollicitudin ac orci. Nibh mauris cursus mattis. Enim diam vulputate ut pharetra sit amet aliquam. Bibendum ut tristique et egestas. In massa tempor nec feugiat nisl pretium fusce id velit.</lorem>\n"
-        + "\t</register>";
+        + "\t</register></dataset>";
 
     this.sender.sendMessageToQueue(queueName, message);
 
